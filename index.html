@@ -1,0 +1,1078 @@
+<!DOCTYPE html>
+<html lang="fr"><head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Gaidanov Multiservices — Artisan Valence Drôme 26</title>
+<meta name="description" content="Gaidanov Multiservices — Rénovation, maçonnerie, toiture, salle de bain, cuisine, terrasse à Valence et en Drôme. Père et fils. 50+ avis. Devis gratuit.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,400;12..96,600;12..96,800&family=Figtree:wght@300;400;500&display=swap" rel="stylesheet">
+<style>
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+:root{
+  --bg:         oklch(9.5% 0.014 78);
+  --surface:    oklch(13%  0.012 78);
+  --surface-2:  oklch(17%  0.010 78);
+  --accent:     oklch(74%  0.150 80);
+  --accent-dim: oklch(58%  0.110 80);
+  --text:       oklch(94%  0.012 78);
+  --text-muted: oklch(55%  0.015 78);
+  --border:     oklch(20%  0.008 78);
+  --border-hi:  oklch(30%  0.012 78);
+
+  --font-display:'Bricolage Grotesque',sans-serif;
+  --font-body:   'Figtree',sans-serif;
+}
+html{scroll-behavior:smooth}
+body{
+  background:var(--bg);color:var(--text);
+  font-family:var(--font-body);font-weight:300;
+  line-height:1.7;overflow-x:hidden;cursor:none;
+}
+
+/* ─── CURSOR ─── */
+#cursor{
+  position:fixed;width:10px;height:10px;
+  background:var(--accent);border-radius:50%;
+  pointer-events:none;z-index:9999;
+  transform:translate(-50%,-50%);
+  transition:transform .08s;
+}
+#cursor-glow{
+  position:fixed;width:380px;height:380px;
+  background:radial-gradient(circle,oklch(74% 0.15 80 / .08) 0%,transparent 65%);
+  border-radius:50%;pointer-events:none;z-index:9998;
+  transform:translate(-50%,-50%);
+}
+
+/* ─── CANVAS ─── */
+#grain,#particles{position:fixed;inset:0;pointer-events:none;}
+#grain{opacity:.035;z-index:2;}
+#particles{z-index:1;opacity:.4;}
+
+/* ─── NAV ─── */
+nav{
+  position:fixed;top:0;left:0;right:0;z-index:100;
+  padding:1.1rem 4rem;
+  display:flex;justify-content:space-between;align-items:center;
+  background:linear-gradient(to bottom,oklch(9.5% 0.014 78 / .92) 0%,transparent 100%);
+  backdrop-filter:blur(12px);
+  border-bottom:1px solid transparent;
+  transition:border-color .3s;
+}
+nav.scrolled{border-color:var(--border);}
+.nav-logo{
+  font-family:var(--font-display);font-size:1rem;font-weight:800;
+  letter-spacing:.14em;text-transform:uppercase;color:var(--text);
+}
+.nav-logo span{color:var(--accent);}
+.nav-phone{
+  font-family:var(--font-display);font-size:.92rem;font-weight:600;
+  letter-spacing:.08em;color:var(--accent);text-decoration:none;
+  transition:color .2s;
+}
+.nav-phone:hover{color:var(--text);}
+
+/* ─── HERO ─── */
+.hero{
+  position:relative;min-height:100svh;
+  display:flex;flex-direction:column;justify-content:flex-end;
+  padding:8rem 4rem 4rem;overflow:hidden;z-index:3;
+}
+.hero-content{position:relative;z-index:5;max-width:780px;}
+.hero-eyebrow{
+  font-family:var(--font-display);font-size:.72rem;font-weight:600;
+  letter-spacing:.28em;text-transform:uppercase;color:var(--text-muted);
+  margin-bottom:1.4rem;display:flex;align-items:center;gap:.75rem;
+}
+.hero-eyebrow::before{
+  content:'';display:block;width:28px;height:1px;
+  background:var(--accent-dim);flex-shrink:0;
+}
+h1{
+  font-family:var(--font-display);
+  font-size:clamp(3.2rem,8vw,7.8rem);
+  font-weight:800;line-height:.88;
+  letter-spacing:-.03em;text-transform:uppercase;
+  margin-bottom:1.6rem;
+}
+h1 .accent{color:var(--accent);}
+.hero-sub{
+  font-size:1.05rem;font-weight:300;line-height:1.75;
+  color:oklch(80% 0.012 78);max-width:56ch;
+  margin-bottom:2.2rem;
+}
+.hero-actions{display:flex;gap:1rem;flex-wrap:wrap;margin-bottom:2.4rem;}
+
+.btn-primary{
+  background:var(--accent);color:oklch(9.5% 0.014 78);
+  padding:.8rem 2.2rem;font-family:var(--font-display);
+  font-size:.88rem;font-weight:800;letter-spacing:.12em;
+  text-transform:uppercase;text-decoration:none;
+  transition:background .2s,transform .15s;display:inline-block;
+}
+.btn-primary:hover{background:oklch(80% 0.14 80);transform:translateY(-2px);}
+.btn-outline{
+  border:1px solid var(--border-hi);color:var(--text);
+  padding:.8rem 2.2rem;font-family:var(--font-display);
+  font-size:.88rem;font-weight:600;letter-spacing:.1em;
+  text-transform:uppercase;text-decoration:none;
+  transition:border-color .2s,color .2s;display:inline-block;
+}
+.btn-outline:hover{border-color:var(--accent);color:var(--accent);}
+
+.hero-strip{
+  display:flex;gap:0;border-top:1px solid var(--border);padding-top:1.2rem;
+}
+.strip-item{
+  font-family:var(--font-display);font-size:.7rem;font-weight:400;
+  letter-spacing:.18em;text-transform:uppercase;color:var(--text-muted);
+  padding-right:1.6rem;margin-right:1.6rem;
+  border-right:1px solid var(--border);
+}
+.strip-item:last-child{border-right:none;padding-right:0;margin-right:0;}
+.strip-item strong{
+  display:block;font-family:var(--font-display);
+  font-size:1.35rem;font-weight:800;
+  color:var(--text);letter-spacing:-.01em;margin-bottom:.1rem;
+  position:relative;overflow:hidden;
+}
+.strip-item strong::after{
+  content:'';position:absolute;inset:0 -100%;
+  background:linear-gradient(90deg,transparent,oklch(74% 0.15 80 / .22),transparent);
+  animation:shimmer 4s ease-in-out infinite;
+}
+.strip-item:nth-child(2) strong::after{animation-delay:1s;}
+.strip-item:nth-child(3) strong::after{animation-delay:2s;}
+.strip-item:nth-child(4) strong::after{animation-delay:3s;}
+@keyframes shimmer{0%{transform:translateX(-100%);}100%{transform:translateX(200%);}}
+
+.hero-deco{
+  position:absolute;right:0;top:50%;transform:translateY(-50%);
+  display:flex;flex-direction:column;align-items:flex-end;gap:.2rem;
+  pointer-events:none;user-select:none;z-index:4;
+}
+.deco-word{
+  font-family:var(--font-display);font-weight:800;
+  text-transform:uppercase;line-height:.88;letter-spacing:-.03em;
+  color:transparent;
+  -webkit-text-stroke:1px oklch(26% 0.01 78);
+}
+.deco-word:nth-child(1){font-size:clamp(4rem,9vw,8.5rem);}
+.deco-word:nth-child(2){font-size:clamp(4.5rem,10vw,9.5rem);}
+.deco-word:nth-child(3){
+  font-size:clamp(7rem,14vw,13rem);
+  -webkit-text-stroke:1px oklch(18% 0.008 78);
+}
+
+/* ─── SHARED ─── */
+section{position:relative;z-index:3;}
+.wrap{padding:6rem 4rem;}
+.wrap-alt{
+  padding:6rem 4rem;background:var(--surface);
+  border-top:1px solid var(--border);border-bottom:1px solid var(--border);
+}
+.section-label{
+  font-family:var(--font-display);font-size:.7rem;font-weight:600;
+  letter-spacing:.22em;text-transform:uppercase;color:var(--accent-dim);
+  display:flex;align-items:center;gap:.6rem;margin-bottom:1.4rem;
+}
+.section-label::before{
+  content:'';display:block;width:20px;height:1px;background:var(--accent-dim);
+}
+h2{
+  font-family:var(--font-display);
+  font-size:clamp(2rem,5vw,4rem);
+  font-weight:800;line-height:.9;
+  letter-spacing:-.025em;text-transform:uppercase;
+  margin-bottom:1.4rem;
+}
+h2 .em{color:var(--accent);}
+.lead{
+  font-size:1rem;font-weight:300;line-height:1.75;
+  color:oklch(72% 0.012 78);max-width:60ch;margin-bottom:3rem;
+}
+
+/* ─── SERVICES 3-COL DIRECTORY ─── */
+.services-top{
+  display:grid;grid-template-columns:1fr 1fr;
+  gap:2rem;align-items:end;margin-bottom:4rem;
+}
+.services-top h2{margin-bottom:0;}
+.services-cols{
+  display:grid;grid-template-columns:repeat(3,1fr);
+  gap:0;border:1px solid var(--border);
+}
+.service-cat{
+  padding:2rem;border-right:1px solid var(--border);
+  transition:background .2s;
+}
+.service-cat:last-child{border-right:none;}
+.service-cat:hover{background:var(--surface-2);}
+.cat-title{
+  font-family:var(--font-display);font-size:1.1rem;font-weight:800;
+  letter-spacing:.08em;text-transform:uppercase;
+  color:var(--accent);margin-bottom:1.2rem;
+  padding-bottom:.8rem;border-bottom:1px solid var(--border);
+}
+.cat-items{list-style:none;display:flex;flex-direction:column;gap:.5rem;}
+.cat-item{
+  font-size:.85rem;font-weight:300;line-height:1.5;
+  color:var(--text-muted);
+  padding-left:1rem;position:relative;
+  transition:color .2s;
+}
+.cat-item::before{
+  content:'—';position:absolute;left:0;
+  color:oklch(28% 0.01 78);font-size:.7rem;
+}
+.service-cat:hover .cat-item{color:oklch(80% 0.012 78);}
+
+/* ─── PÈRE & FILS ─── */
+.duo-layout{
+  display:grid;grid-template-columns:1fr 1fr;
+  gap:5rem;align-items:start;
+}
+.duo-left{}
+.duo-quote{
+  font-family:var(--font-display);
+  font-size:clamp(1.6rem,3.5vw,2.8rem);
+  font-weight:800;line-height:1.05;
+  text-transform:uppercase;letter-spacing:-.02em;
+  margin-bottom:2rem;color:var(--text);
+}
+.duo-quote .em{color:var(--accent);}
+.duo-body{
+  font-size:1rem;font-weight:300;line-height:1.8;
+  color:oklch(72% 0.012 78);max-width:52ch;margin-bottom:2rem;
+}
+.duo-metrics{
+  display:grid;grid-template-columns:1fr 1fr;gap:1.5rem;
+}
+.duo-metric{
+  padding:1.2rem;border:1px solid var(--border);
+  transition:border-color .3s,background .2s;
+  animation:pulseB 5s ease-in-out infinite;
+}
+.duo-metric:nth-child(2){animation-delay:1.4s;}
+.duo-metric:nth-child(3){animation-delay:2.8s;}
+.duo-metric:nth-child(4){animation-delay:4.2s;}
+@keyframes pulseB{
+  0%,100%{border-color:oklch(20% 0.008 78);}
+  50%{border-color:oklch(40% 0.06 80);}
+}
+.duo-metric:hover{border-color:var(--accent);background:var(--surface-2);}
+.metric-val{
+  font-family:var(--font-display);font-size:2rem;font-weight:800;
+  color:var(--accent);display:block;line-height:1;letter-spacing:-.01em;
+  margin-bottom:.3rem;
+}
+.metric-label{
+  font-size:.72rem;font-weight:400;letter-spacing:.14em;
+  text-transform:uppercase;color:var(--text-muted);
+}
+.duo-right{}
+.values-list{
+  border-top:1px solid var(--border);margin-top:2rem;
+}
+.value-row{
+  display:grid;grid-template-columns:8rem 1fr;
+  gap:1.5rem;align-items:start;
+  padding:1.4rem 0;border-bottom:1px solid var(--border);
+  transition:background .2s;
+}
+.value-row:hover{
+  background:oklch(15% 0.01 78 / .5);
+  padding-left:.75rem;padding-right:.75rem;
+  margin:0 -.75rem;
+}
+.value-word{
+  font-family:var(--font-display);font-size:1rem;font-weight:800;
+  letter-spacing:.1em;text-transform:uppercase;color:var(--accent);
+}
+.value-desc{
+  font-size:.85rem;font-weight:300;line-height:1.65;
+  color:var(--text-muted);
+}
+.value-row:hover .value-desc{color:oklch(72% 0.012 78);}
+
+/* ─── REVIEWS CAROUSEL ─── */
+.reviews-wrap{overflow:hidden;position:relative;}
+.reviews-track{
+  display:flex;gap:1.5rem;
+  transition:transform .4s cubic-bezier(.25,.46,.45,.94);
+  cursor:grab;user-select:none;
+}
+.reviews-track.dragging{
+  transition:none;cursor:grabbing;
+}
+.review-slide{
+  min-width:calc(33.333% - 1rem);flex-shrink:0;
+}
+.review-card{
+  border:1px solid var(--border);
+  padding:1.8rem;background:var(--surface);height:100%;
+  display:flex;flex-direction:column;
+  transition:border-color .25s;
+}
+.review-card:hover{border-color:var(--accent-dim);}
+.review-stars{
+  color:var(--accent);font-size:.95rem;letter-spacing:.06em;
+  margin-bottom:.9rem;
+}
+.review-text{
+  font-size:.88rem;font-weight:300;line-height:1.8;
+  color:oklch(78% 0.012 78);font-style:italic;
+  flex:1;margin-bottom:1.2rem;
+}
+.review-author{
+  font-family:var(--font-display);font-size:.72rem;font-weight:600;
+  letter-spacing:.12em;text-transform:uppercase;
+  color:var(--text-muted);
+}
+.review-subject{
+  font-size:.75rem;font-weight:300;color:var(--accent-dim);
+  margin-top:.25rem;letter-spacing:.04em;
+}
+.carousel-controls{
+  display:flex;justify-content:space-between;align-items:center;
+  margin-top:2rem;
+}
+.carousel-arrows{display:flex;gap:.75rem;}
+.carousel-btn{
+  width:44px;height:44px;
+  border:1px solid var(--border-hi);background:transparent;
+  color:var(--text);font-size:1.1rem;
+  display:flex;align-items:center;justify-content:center;
+  cursor:pointer;transition:border-color .2s,background .2s,color .2s;
+}
+.carousel-btn:hover{border-color:var(--accent);color:var(--accent);}
+.carousel-count{
+  font-family:var(--font-display);font-size:.75rem;font-weight:600;
+  letter-spacing:.18em;text-transform:uppercase;color:var(--text-muted);
+}
+
+/* ─── 4 ÉTAPES ─── */
+.etapes-grid{
+  display:grid;grid-template-columns:repeat(4,1fr);
+  gap:0;border:1px solid var(--border);
+  margin-top:3rem;
+}
+.etape-item{
+  padding:2.5rem 2rem;border-right:1px solid var(--border);
+  transition:background .2s;
+}
+.etape-item:last-child{border-right:none;}
+.etape-item:hover{background:var(--surface-2);}
+.etape-n{
+  font-family:var(--font-display);font-size:3.5rem;font-weight:800;
+  color:transparent;-webkit-text-stroke:1px oklch(28% 0.01 78);
+  line-height:1;display:block;margin-bottom:1.4rem;
+  transition:-webkit-text-stroke-color .4s;
+}
+.etape-item:hover .etape-n{-webkit-text-stroke-color:oklch(50% 0.08 80);}
+.etape-title{
+  font-family:var(--font-display);font-size:1.05rem;font-weight:800;
+  letter-spacing:.07em;text-transform:uppercase;
+  color:var(--text);margin-bottom:.5rem;
+}
+.etape-desc{font-size:.82rem;font-weight:300;line-height:1.65;color:var(--text-muted);}
+
+/* ─── FORM ─── */
+.form-wrap{
+  display:grid;grid-template-columns:5fr 7fr;
+  gap:5rem;align-items:start;
+}
+.form-tagline{
+  font-size:1rem;font-weight:300;line-height:1.75;
+  color:oklch(72% 0.012 78);max-width:38ch;margin-bottom:2rem;
+}
+.trust-block{
+  padding:1.2rem;border:1px solid var(--border);
+  font-size:.82rem;font-weight:300;line-height:1.7;
+  color:var(--text-muted);
+  display:flex;align-items:flex-start;gap:.75rem;
+}
+.trust-block::before{
+  content:'50+';
+  font-family:var(--font-display);font-size:1.2rem;font-weight:800;
+  color:var(--accent);flex-shrink:0;line-height:1;margin-top:.1rem;
+}
+.form-fields{display:grid;grid-template-columns:1fr 1fr;gap:.75rem;}
+.form-fields .full{grid-column:1/-1;}
+.field-wrap{display:flex;flex-direction:column;gap:.4rem;}
+.field-wrap label{
+  font-family:var(--font-display);font-size:.68rem;font-weight:600;
+  letter-spacing:.2em;text-transform:uppercase;color:var(--text-muted);
+}
+.field-wrap input,
+.field-wrap select,
+.field-wrap textarea{
+  background:var(--surface);border:1px solid var(--border);
+  padding:.75rem 1rem;color:var(--text);
+  font-family:var(--font-body);font-size:.9rem;font-weight:300;
+  outline:none;-webkit-appearance:none;
+  transition:border-color .2s;
+}
+.field-wrap input::placeholder,
+.field-wrap textarea::placeholder{color:var(--text-muted);}
+.field-wrap input:focus,
+.field-wrap select:focus,
+.field-wrap textarea:focus{border-color:var(--accent);}
+.field-wrap select option{background:var(--surface);}
+.field-wrap textarea{resize:vertical;min-height:100px;}
+.form-submit{
+  grid-column:1/-1;background:var(--accent);
+  color:oklch(9.5% 0.014 78);padding:.9rem 2rem;
+  font-family:var(--font-display);font-size:.9rem;font-weight:800;
+  letter-spacing:.12em;text-transform:uppercase;
+  border:none;cursor:pointer;width:100%;
+  transition:background .2s,transform .15s;
+}
+.form-submit:hover{background:oklch(80% 0.14 80);transform:translateY(-2px);}
+
+/* ─── MAPS ─── */
+.maps-section{padding:0 4rem 6rem;position:relative;z-index:3;}
+.maps-wrap{
+  border:1px solid var(--border);height:380px;overflow:hidden;
+  filter:grayscale(.6) contrast(1.08);transition:filter .3s;
+}
+.maps-wrap:hover{filter:grayscale(.2) contrast(1.08);}
+.maps-wrap iframe{width:100%;height:100%;border:0;display:block;}
+
+/* ─── CONTACT BAND ─── */
+.contact-band{
+  background:var(--surface);border-top:1px solid var(--border);
+  padding:5rem 4rem;
+  display:grid;grid-template-columns:1fr auto;
+  align-items:center;gap:2rem;
+  position:relative;z-index:3;
+}
+.contact-tagline{
+  font-family:var(--font-display);
+  font-size:clamp(1.6rem,4vw,2.8rem);font-weight:800;
+  text-transform:uppercase;line-height:.95;letter-spacing:-.02em;
+}
+.contact-tagline .em{color:var(--accent);}
+.contact-right{display:flex;flex-direction:column;align-items:flex-end;gap:.75rem;}
+.contact-phone{
+  font-family:var(--font-display);font-size:clamp(1.4rem,3vw,2.2rem);
+  font-weight:800;letter-spacing:.04em;color:var(--accent);
+  text-decoration:none;transition:color .2s;
+}
+.contact-phone:hover{color:var(--text);}
+.contact-meta{font-size:.72rem;font-weight:300;letter-spacing:.1em;
+  text-transform:uppercase;color:var(--text-muted);text-align:right;}
+
+/* ─── FOOTER ─── */
+footer{
+  padding:1.8rem 4rem;border-top:1px solid var(--border);
+  display:flex;justify-content:space-between;align-items:center;
+  font-size:.72rem;font-weight:300;letter-spacing:.07em;
+  color:var(--text-muted);position:relative;z-index:3;
+}
+footer a{color:var(--text-muted);text-decoration:none;transition:color .2s;}
+footer a:hover{color:var(--accent);}
+
+/* ─── FADE UP ─── */
+.fade-up{opacity:0;transform:translateY(22px);transition:opacity .6s ease,transform .6s ease;}
+.fade-up.visible{opacity:1;transform:none;}
+
+/* ─── RESPONSIVE ─── */
+@media(max-width:1100px){
+  .services-cols{grid-template-columns:1fr 1fr;}
+  .service-cat:nth-child(2){border-right:none;}
+  .service-cat:nth-child(3){border-top:1px solid var(--border);}
+  .duo-layout{grid-template-columns:1fr;}
+  .duo-metrics{grid-template-columns:1fr 1fr 1fr 1fr;}
+  .review-slide{min-width:calc(50% - .75rem);}
+  .etapes-grid{grid-template-columns:1fr 1fr;}
+  .etape-item:nth-child(2){border-right:none;}
+  .etape-item:nth-child(3){border-top:1px solid var(--border);border-right:1px solid var(--border);}
+  .etape-item:nth-child(4){border-top:1px solid var(--border);border-right:none;}
+}
+@media(max-width:900px){
+  nav{padding:1rem 1.5rem;}
+  .hero{padding:6rem 1.5rem 3rem;}
+  .hero-deco{display:none;}
+  .wrap,.wrap-alt{padding:4rem 1.5rem;}
+  .services-top{grid-template-columns:1fr;}
+  .services-cols{grid-template-columns:1fr;}
+  .service-cat{border-right:none;border-bottom:1px solid var(--border);}
+  .service-cat:last-child{border-bottom:none;}
+  .duo-metrics{grid-template-columns:1fr 1fr;}
+  .review-slide{min-width:calc(100% - 0px);}
+  .form-wrap{grid-template-columns:1fr;gap:3rem;}
+  .contact-band{grid-template-columns:1fr;padding:3rem 1.5rem;}
+  .contact-right{align-items:flex-start;}
+  .contact-meta{text-align:left;}
+  .maps-section{padding:0 1.5rem 4rem;}
+  footer{padding:1.5rem;flex-direction:column;gap:.5rem;text-align:center;}
+}
+@media(max-width:600px){
+  h1{font-size:clamp(2.6rem,10vw,3.8rem);}
+  .hero-strip{flex-direction:column;gap:1rem;}
+  .strip-item{border-right:none;padding-right:0;margin-right:0;}
+  .etapes-grid{grid-template-columns:1fr;}
+  .etape-item{border-right:none;border-bottom:1px solid var(--border);}
+  .etape-item:last-child{border-bottom:none;}
+  .form-fields{grid-template-columns:1fr;}
+  .form-fields .full{grid-column:auto;}
+  .duo-metrics{grid-template-columns:1fr 1fr;}
+}
+</style>
+</head>
+<body>
+
+<canvas id="grain"></canvas>
+<canvas id="particles"></canvas>
+<div id="cursor"></div>
+<div id="cursor-glow"></div>
+
+<nav id="nav">
+  <div class="nav-logo">Gaidanov <span>Multiservices</span></div>
+  <a href="tel:0769241722" class="nav-phone">07 69 24 17 22</a>
+</nav>
+
+<section class="hero">
+  <div class="hero-content">
+    <div class="hero-eyebrow fade-up">Artisan Multiservices — Valence, Drôme (26)</div>
+    <h1 class="fade-up">
+      Un seul artisan.<br>
+      <span class="accent" data-scramble="VALENCE">Tous les travaux.</span>
+    </h1>
+    <p class="hero-sub fade-up">
+      Rénovation complète, maçonnerie, toiture, salle de bain, cuisine, terrasse, étanchéité — M. Gaidanov et son fils interviennent eux-mêmes sur tous vos chantiers à Valence et en Drôme.
+    </p>
+    <div class="hero-actions fade-up">
+      <a href="#devis" class="btn-primary">Demander un devis</a>
+      <a href="tel:0769241722" class="btn-outline">07 69 24 17 22</a>
+    </div>
+    <div class="hero-strip fade-up">
+      <div class="strip-item"><strong>50+</strong>avis Google</div>
+      <div class="strip-item"><strong>Père &amp; Fils</strong>équipe directe</div>
+      <div class="strip-item"><strong>Multi</strong>tous corps de métier</div>
+      <div class="strip-item"><strong>26</strong>Drôme — Valence</div>
+    </div>
+  </div>
+  <div class="hero-deco" aria-hidden="true">
+    <span class="deco-word">MULTI</span>
+    <span class="deco-word">SERVICE</span>
+    <span class="deco-word">26</span>
+  </div>
+</section>
+
+<section id="prestations">
+  <div class="wrap">
+    <div class="services-top">
+      <div>
+        <div class="section-label fade-up">Prestations</div>
+        <h2 class="fade-up">Tout ce que<br>nous <span class="em">réalisons</span></h2>
+      </div>
+      <p class="lead fade-up">
+        Plafond, cuisine, salle de bain, terrasse, toiture ou rénovation complète — un seul appel suffit. Pas de sous-traitant : M. Gaidanov et son fils font eux-mêmes.
+      </p>
+    </div>
+    <div class="services-cols">
+      <div class="service-cat fade-up">
+        <div class="cat-title">Intérieur</div>
+        <ul class="cat-items">
+          <li class="cat-item">Salle de bain de A à Z</li>
+          <li class="cat-item">Cuisine équipée</li>
+          <li class="cat-item">Plafond &amp; faux-plafond</li>
+          <li class="cat-item">Placards &amp; agencement</li>
+          <li class="cat-item">Carrelage &amp; faïence</li>
+          <li class="cat-item">Peinture intérieure</li>
+        </ul>
+      </div>
+      <div class="service-cat fade-up">
+        <div class="cat-title">Extérieur</div>
+        <ul class="cat-items">
+          <li class="cat-item">Toiture &amp; couverture</li>
+          <li class="cat-item">Étanchéité</li>
+          <li class="cat-item">Chéneaux &amp; gouttières</li>
+          <li class="cat-item">Terrasse &amp; dallage</li>
+          <li class="cat-item">Chape béton</li>
+          <li class="cat-item">Loggia &amp; balcon</li>
+        </ul>
+      </div>
+      <div class="service-cat fade-up">
+        <div class="cat-title">Rénovation</div>
+        <ul class="cat-items">
+          <li class="cat-item">Appartement complet</li>
+          <li class="cat-item">Maison individuelle</li>
+          <li class="cat-item">Logement locatif</li>
+          <li class="cat-item">Maçonnerie générale</li>
+          <li class="cat-item">Enduits &amp; rebouchage</li>
+          <li class="cat-item">Infiltrations &amp; humidité</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section id="duo">
+  <div class="wrap-alt">
+    <div class="duo-layout">
+      <div class="duo-left">
+        <div class="section-label fade-up">Qui nous sommes</div>
+        <div class="duo-quote fade-up">
+          Père &amp; Fils —<br><span class="em">depuis le premier jour</span>
+        </div>
+        <p class="duo-body fade-up">
+          Pas de sous-traitance. Pas d'inconnu sur votre chantier. M. Gaidanov et son fils interviennent eux-mêmes, du premier devis à la dernière finition. Votre chantier, c'est aussi leur réputation.
+        </p>
+        <p class="duo-body fade-up" style="margin-top:-1rem">
+          Réactivité, prix honnêtes, travail soigné — c'est ce que 50 clients ont reconnu dans leurs avis Google. Ce n'est pas un argument marketing. C'est une constante vérifiée.
+        </p>
+        <div class="duo-metrics">
+          <div class="duo-metric fade-up">
+            <span class="metric-val">50+</span>
+            <span class="metric-label">Avis Google</span>
+          </div>
+          <div class="duo-metric fade-up">
+            <span class="metric-val">5★</span>
+            <span class="metric-label">Note moyenne</span>
+          </div>
+          <div class="duo-metric fade-up">
+            <span class="metric-val">2</span>
+            <span class="metric-label">Artisans dédiés</span>
+          </div>
+          <div class="duo-metric fade-up">
+            <span class="metric-val">0</span>
+            <span class="metric-label">Sous-traitant</span>
+          </div>
+        </div>
+      </div>
+      <div class="duo-right">
+        <div class="section-label fade-up" style="margin-top:2.5rem">Ce qui nous définit</div>
+        <div class="values-list">
+          <div class="value-row fade-up">
+            <span class="value-word">Réactivité</span>
+            <p class="value-desc">Finis dans les temps — parfois avant. "Ils ont été très réactifs" revient dans les avis comme une évidence, pas une exception.</p>
+          </div>
+          <div class="value-row fade-up">
+            <span class="value-word">Qualité</span>
+            <p class="value-desc">"Professionnalisme rarement vu", "travail minutieux", "résultat top" — des mots de clients, pas de nous.</p>
+          </div>
+          <div class="value-row fade-up">
+            <span class="value-word">Prix juste</span>
+            <p class="value-desc">Prix abordables, attractifs, intéressants — cités à chaque fois. Artisanat de qualité sans surfacturation.</p>
+          </div>
+          <div class="value-row fade-up">
+            <span class="value-word">Confiance</span>
+            <p class="value-desc">"Homme de parole", "digne de confiance" — le père et le fils ont la même exigence. Vous les rappellerez.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section id="avis">
+  <div class="wrap">
+    <div class="section-label fade-up">Avis clients</div>
+    <h2 class="fade-up">Ce que disent<br><span class="em">50+ clients</span></h2>
+    <p class="lead fade-up">Rénovation, toiture, salle de bain, cuisine, terrasse — chaque métier représenté, chaque client satisfait.</p>
+
+    <div class="reviews-wrap fade-up">
+      <div class="reviews-track" id="revTrack">
+
+        <div class="review-slide"><div class="review-card">
+          <div class="review-stars">★★★★★</div>
+          <p class="review-text">"J'ai fait appel à M. Gaidanov pour refaire un plafond et un placard (malgré un sol pas droit). Ils ont trouvé une super solution et le résultat est top ! Avec une telle qualité de finition, je recommande sans hésiter et je retravaillerai avec eux sans problème."</p>
+          <div class="review-author">Jules Belorgeot</div>
+          <div class="review-subject">Plafond &amp; placard</div>
+        </div></div>
+
+        <div class="review-slide"><div class="review-card">
+          <div class="review-stars">★★★★★</div>
+          <p class="review-text">"J'ai fait appel à Gaidanov Multiservices pour un problème d'étanchéité et pour la pose de chéneaux : ils ont fait un travail remarquable avec un grand professionnalisme, et ils sont en plus très sympathiques, je referai appel à eux avec plaisir !"</p>
+          <div class="review-author">Juliette A.</div>
+          <div class="review-subject">Étanchéité &amp; chéneaux</div>
+        </div></div>
+
+        <div class="review-slide"><div class="review-card">
+          <div class="review-stars">★★★★★</div>
+          <p class="review-text">"Excellent artisan, il nous a refait notre salle de bain de A à Z avec un professionnalisme rarement vu et dans un temps record et à un très bon tarif. On le recommande à 100%. Merci encore Mr Gaidanov."</p>
+          <div class="review-author">Makoto H.</div>
+          <div class="review-subject">Salle de bain complète</div>
+        </div></div>
+
+        <div class="review-slide"><div class="review-card">
+          <div class="review-stars">★★★★★</div>
+          <p class="review-text">"Merci à la société Gaidanov, ils ont été très réactifs, un travail de qualité, et des chantiers finis dans les temps (même avant la date indiquée) ! Je recommande fortement pour l'efficacité et la qualité de travail !"</p>
+          <div class="review-author">André Nourry</div>
+          <div class="review-subject">Chantier dans les délais</div>
+        </div></div>
+
+        <div class="review-slide"><div class="review-card">
+          <div class="review-stars">★★★★★</div>
+          <p class="review-text">"Mr Gaidanov est un homme de parole, digne de confiance, efficace de solutions — je recommande vivement cette entreprise. À bientôt pour d'autres travaux !"</p>
+          <div class="review-author">Rosaria Neumuller</div>
+          <div class="review-subject">Confiance &amp; fiabilité</div>
+        </div></div>
+
+        <div class="review-slide"><div class="review-card">
+          <div class="review-stars">★★★★★</div>
+          <p class="review-text">"J'ai fait appel à cette entreprise pour la rénovation complète d'un appartement que nous allons mettre en location. Résultat remarquable — je recommande !"</p>
+          <div class="review-author">Morgane Lucas</div>
+          <div class="review-subject">Rénovation appartement</div>
+        </div></div>
+
+        <div class="review-slide"><div class="review-card">
+          <div class="review-stars">★★★★★</div>
+          <p class="review-text">"Il est passé chez moi il a fait du super boulot pour un prix super abordable, c'était top, merci encore !"</p>
+          <div class="review-author">Florent M.</div>
+          <div class="review-subject">Rapport qualité-prix</div>
+        </div></div>
+
+        <div class="review-slide"><div class="review-card">
+          <div class="review-stars">★★★★★</div>
+          <p class="review-text">"Travail impeccable. Je suis très content de ma nouvelle cuisine équipée."</p>
+          <div class="review-author">Gérard Laguette</div>
+          <div class="review-subject">Cuisine équipée</div>
+        </div></div>
+
+        <div class="review-slide"><div class="review-card">
+          <div class="review-stars">★★★★★</div>
+          <p class="review-text">"J'ai fait appel à M. Gaidanov et son fils pour ma terrasse — très content du résultat."</p>
+          <div class="review-author">Tristan</div>
+          <div class="review-subject">Terrasse — père &amp; fils</div>
+        </div></div>
+
+        <div class="review-slide"><div class="review-card">
+          <div class="review-stars">★★★★★</div>
+          <p class="review-text">"Prix très intéressant, rapide et efficace. Je recommande fortement cet artisan."</p>
+          <div class="review-author">Michel Satutto</div>
+          <div class="review-subject">Rapidité &amp; prix</div>
+        </div></div>
+
+        <div class="review-slide"><div class="review-card">
+          <div class="review-stars">★★★★★</div>
+          <p class="review-text">"Artisan très sérieux, prix correct et travail minutieux."</p>
+          <div class="review-author">Sébastien Dutronc</div>
+          <div class="review-subject">Sérieux &amp; minutieux</div>
+        </div></div>
+
+        <div class="review-slide"><div class="review-card">
+          <div class="review-stars">★★★★★</div>
+          <p class="review-text">"Merci encore pour ce 2ème chantier. Tout s'est encore très bien passé. Merci à M. Gaidanov et son fils."</p>
+          <div class="review-author">Anthony Lapierre</div>
+          <div class="review-subject">Client fidèle — 2ème chantier</div>
+        </div></div>
+
+        <div class="review-slide"><div class="review-card">
+          <div class="review-stars">★★★★★</div>
+          <p class="review-text">"Merci pour la rénovation de ma cuisine ! Très pro, très rapide, très gentil ! Je conseille fortement !"</p>
+          <div class="review-author">Mateo Mauger</div>
+          <div class="review-subject">Cuisine rénovée</div>
+        </div></div>
+
+        <div class="review-slide"><div class="review-card">
+          <div class="review-stars">★★★★★</div>
+          <p class="review-text">"J'avais un problème d'infiltration d'eau dans ma loggia. Gaidanov Multiservices est intervenu avec professionnalisme et efficacité — le problème est réglé."</p>
+          <div class="review-author">Mireille Drevet</div>
+          <div class="review-subject">Loggia &amp; infiltration</div>
+        </div></div>
+
+        <div class="review-slide"><div class="review-card">
+          <div class="review-stars">★★★★★</div>
+          <p class="review-text">"Mr Gaidanov a refait complètement ma cuisine — hyper satisfait du résultat. Merci encore."</p>
+          <div class="review-author">Bernard Lehnert</div>
+          <div class="review-subject">Cuisine complète</div>
+        </div></div>
+
+      </div>
+    </div>
+    <div class="carousel-controls fade-up">
+      <span class="carousel-count" id="revCount">01 / 15</span>
+      <div class="carousel-arrows">
+        <button class="carousel-btn" id="revPrev" aria-label="Précédent">‹</button>
+        <button class="carousel-btn" id="revNext" aria-label="Suivant">›</button>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section id="process">
+  <div class="wrap-alt">
+    <div class="section-label fade-up">Comment ça se passe</div>
+    <h2 class="fade-up">Votre chantier<br>en <span class="em">4 étapes</span></h2>
+    <div class="etapes-grid">
+      <div class="etape-item fade-up">
+        <span class="etape-n">01</span>
+        <div class="etape-title">Premier contact</div>
+        <p class="etape-desc">Un appel, un déplacement gratuit. M. Gaidanov visite le chantier et écoute votre projet.</p>
+      </div>
+      <div class="etape-item fade-up">
+        <span class="etape-n">02</span>
+        <div class="etape-title">Devis détaillé</div>
+        <p class="etape-desc">Estimation précise et transparente sous 48h. Prix honnêtes, sans surprise en cours de chantier.</p>
+      </div>
+      <div class="etape-item fade-up">
+        <span class="etape-n">03</span>
+        <div class="etape-title">Réalisation</div>
+        <p class="etape-desc">Père et fils sur le chantier. Délais tenus — souvent dépassés dans le bon sens.</p>
+      </div>
+      <div class="etape-item fade-up">
+        <span class="etape-n">04</span>
+        <div class="etape-title">Réception</div>
+        <p class="etape-desc">Visite finale, vérification complète. Vous ne payez que quand vous êtes satisfait.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section id="devis">
+  <div class="wrap">
+    <div class="form-wrap">
+      <div class="form-intro">
+        <div class="section-label fade-up">Devis gratuit</div>
+        <h2 class="fade-up">Décrivez<br>votre <span class="em">projet</span></h2>
+        <p class="form-tagline fade-up">
+          M. Gaidanov répond directement — pas de secrétaire, pas de délai. Devis gratuit, déplacement sur Valence et alentours.
+        </p>
+        <div class="trust-block fade-up">
+          avis vérifiés Google — des clients qui reviennent, et qui recommandent.
+        </div>
+      </div>
+      <form class="form-fields fade-up" action="mailto:gaidanov.multiservices@gmail.com" method="post" enctype="text/plain">
+        <div class="field-wrap">
+          <label for="prenom">Prénom</label>
+          <input type="text" id="prenom" name="prenom" placeholder="Votre prénom" required>
+        </div>
+        <div class="field-wrap">
+          <label for="tel">Téléphone</label>
+          <input type="tel" id="tel" name="tel" placeholder="07 xx xx xx xx" required>
+        </div>
+        <div class="field-wrap full">
+          <label for="travaux">Type de travaux</label>
+          <select id="travaux" name="travaux">
+            <option value="">Sélectionnez...</option>
+            <option>Rénovation complète</option>
+            <option>Salle de bain</option>
+            <option>Cuisine</option>
+            <option>Plafond / Placard</option>
+            <option>Toiture / Étanchéité</option>
+            <option>Terrasse / Dallage</option>
+            <option>Chéneaux / Gouttières</option>
+            <option>Maçonnerie générale</option>
+            <option>Autre</option>
+          </select>
+        </div>
+        <div class="field-wrap full">
+          <label for="message">Décrivez votre projet</label>
+          <textarea id="message" name="message" placeholder="Nature des travaux, surface approximative, commune, délai souhaité..."></textarea>
+        </div>
+        <button type="submit" class="form-submit">Envoyer ma demande</button>
+      </form>
+    </div>
+  </div>
+</section>
+
+<div class="maps-section">
+  <div class="maps-wrap fade-up">
+    <iframe src="https://maps.google.com/maps?q=44.9371588,4.9003963&t=&z=13&output=embed" allowfullscreen loading="lazy"></iframe>
+  </div>
+</div>
+
+<div class="contact-band" id="contact">
+  <div class="contact-tagline fade-up">
+    Un projet ?<br>Appelez <span class="em">M. Gaidanov</span> directement.
+  </div>
+  <div class="contact-right fade-up">
+    <a href="tel:0769241722" class="contact-phone">07 69 24 17 22</a>
+    <a href="#devis" class="btn-primary">Demander un devis</a>
+    <div class="contact-meta">Valence — Drôme (26)</div>
+  </div>
+</div>
+
+<footer>
+  <span>Gaidanov Multiservices — Artisan Valence, Drôme (26)</span>
+  <span>07 69 24 17 22</span>
+</footer>
+
+<script>
+// ── CURSOR
+const cur=document.getElementById('cursor');
+const glow=document.getElementById('cursor-glow');
+let mx=0,my=0,gx=0,gy=0;
+document.addEventListener('mousemove',e=>{mx=e.clientX;my=e.clientY;});
+function lerp(a,b,t){return a+(b-a)*t;}
+(function tick(){
+  gx=lerp(gx,mx,.07);gy=lerp(gy,my,.07);
+  cur.style.left=mx+'px';cur.style.top=my+'px';
+  glow.style.left=gx+'px';glow.style.top=gy+'px';
+  requestAnimationFrame(tick);
+})();
+document.addEventListener('mousedown',()=>cur.style.transform='translate(-50%,-50%) scale(2)');
+document.addEventListener('mouseup',()=>cur.style.transform='translate(-50%,-50%) scale(1)');
+
+// ── NAV SCROLL
+const nav=document.getElementById('nav');
+window.addEventListener('scroll',()=>{nav.classList.toggle('scrolled',window.scrollY>60);},{passive:true});
+
+// ── GRAIN
+(function(){
+  const c=document.getElementById('grain'),ctx=c.getContext('2d');
+  let w,h;
+  function resize(){c.width=w=window.innerWidth;c.height=h=window.innerHeight;}
+  resize();window.addEventListener('resize',resize);
+  function draw(){
+    const img=ctx.createImageData(w,h);const d=img.data;
+    for(let i=0;i<d.length;i+=4){
+      const v=Math.random()*255|0;d[i]=d[i+1]=d[i+2]=v;d[i+3]=12;
+    }
+    ctx.putImageData(img,0,0);
+  }
+  setInterval(draw,80);
+})();
+
+// ── PARTICLES — éclats de soleil (Drôme, poussière fine)
+(function(){
+  const c=document.getElementById('particles'),ctx=c.getContext('2d');
+  let W,H;
+  function resize(){c.width=W=window.innerWidth;c.height=H=window.innerHeight;}
+  resize();window.addEventListener('resize',resize);
+  const PAL=['oklch(74% 0.15 80)','oklch(82% 0.12 85)','oklch(65% 0.1 78)','oklch(55% 0.07 72)','oklch(88% 0.06 88)'];
+  function make(){
+    return{
+      x:Math.random()*W,y:Math.random()*H+H*.05,
+      r:Math.random()*2.5+.8,
+      vx:(Math.random()-.5)*.18,vy:-(Math.random()*.2+.04),
+      alpha:Math.random()*.25+.04,
+      color:PAL[Math.floor(Math.random()*PAL.length)],
+      life:0,maxLife:300+Math.random()*260
+    };
+  }
+  const P=[];const N=50;
+  for(let i=0;i<N;i++){const p=make();p.life=Math.random()*p.maxLife;P.push(p);}
+  function draw(){
+    ctx.clearRect(0,0,W,H);
+    P.forEach((p,i)=>{
+      p.x+=p.vx;p.y+=p.vy;p.life++;
+      const t=p.life/p.maxLife;
+      const a=p.alpha*(t<.1?t/.1:t>.85?(1-t)/.15:1);
+      ctx.globalAlpha=a;ctx.fillStyle=p.color;
+      ctx.beginPath();ctx.arc(p.x,p.y,p.r,0,Math.PI*2);ctx.fill();
+      if(p.life>=p.maxLife||p.y<-10)P[i]=make();
+    });
+    ctx.globalAlpha=1;
+    requestAnimationFrame(draw);
+  }
+  draw();
+})();
+
+// ── CHAR SCRAMBLE
+(function(){
+  const chars='ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789';
+  function scramble(el){
+    const orig=[...el.textContent];
+    let frame=0;const total=22;
+    const iv=setInterval(()=>{
+      el.textContent=orig.map((c,i)=>{
+        if(!/[A-Za-z0-9]/.test(c))return c;
+        if(frame/total>(i/orig.length))return c;
+        return chars[Math.random()*chars.length|0];
+      }).join('');
+      if(++frame>total){el.textContent=orig.join('');clearInterval(iv);}
+    },40);
+  }
+  const targets=document.querySelectorAll('[data-scramble]');
+  targets.forEach(el=>el.addEventListener('mouseenter',()=>scramble(el)));
+  setTimeout(()=>targets.forEach(el=>scramble(el)),1400);
+})();
+
+// ── 3D TILT
+document.querySelectorAll('.service-cat,.duo-metric,.value-row,.etape-item').forEach(el=>{
+  el.addEventListener('mousemove',e=>{
+    const r=el.getBoundingClientRect();
+    const x=(e.clientX-r.left)/r.width-.5;
+    const y=(e.clientY-r.top)/r.height-.5;
+    el.style.transform=`perspective(600px) rotateX(${-y*4}deg) rotateY(${x*4}deg)`;
+  });
+  el.addEventListener('mouseleave',()=>{el.style.transform='';});
+});
+
+// ── FADE UP
+const io=new IntersectionObserver(entries=>{
+  entries.forEach(e=>{if(e.isIntersecting)e.target.classList.add('visible');});
+},{threshold:.1,rootMargin:'0px 0px -40px 0px'});
+document.querySelectorAll('.fade-up').forEach(el=>io.observe(el));
+
+// ── SMOOTH SCROLL
+document.querySelectorAll('a[href^="#"]').forEach(a=>{
+  a.addEventListener('click',e=>{
+    const t=document.querySelector(a.getAttribute('href'));
+    if(t){e.preventDefault();t.scrollIntoView({behavior:'smooth',block:'start'});}
+  });
+});
+
+// ── CAROUSEL
+(function(){
+  const track=document.getElementById('revTrack');
+  if(!track)return;
+  const slides=Array.from(track.querySelectorAll('.review-slide'));
+  const count=document.getElementById('revCount');
+  const total=slides.length;
+  let idx=0,visCount=3,startX=0,startScroll=0,isDragging=false;
+
+  function getVisCount(){
+    const w=window.innerWidth;
+    if(w<700)return 1;
+    if(w<1100)return 2;
+    return 3;
+  }
+
+  function getSlideW(){
+    return track.parentElement.offsetWidth/visCount+(visCount>1?1.5/visCount*16:0);
+  }
+
+  function go(n){
+    visCount=getVisCount();
+    const max=Math.max(0,total-visCount);
+    idx=Math.min(Math.max(n,0),max);
+    const slideW=track.parentElement.offsetWidth/visCount;
+    const gap=1.5*16/(visCount);
+    track.style.transform=`translateX(-${idx*(slideW+gap)}px)`;
+    if(count)count.textContent=String(idx+1).padStart(2,'0')+' / '+String(total).padStart(2,'0');
+  }
+
+  document.getElementById('revPrev')?.addEventListener('click',()=>go(idx-1));
+  document.getElementById('revNext')?.addEventListener('click',()=>go(idx+1));
+  window.addEventListener('resize',()=>go(idx));
+
+  // Drag
+  function onDragStart(clientX){
+    isDragging=true;startX=clientX;startScroll=idx;
+    track.classList.add('dragging');
+  }
+  function onDragMove(clientX){
+    if(!isDragging)return;
+    const diff=startX-clientX;
+    const slideW=track.parentElement.offsetWidth/visCount;
+    const threshold=slideW*.25;
+    if(Math.abs(diff)>threshold){
+      go(startScroll+(diff>0?1:-1));
+      isDragging=false;track.classList.remove('dragging');
+    }
+  }
+  function onDragEnd(){isDragging=false;track.classList.remove('dragging');}
+  track.addEventListener('mousedown',e=>onDragStart(e.clientX));
+  window.addEventListener('mousemove',e=>onDragMove(e.clientX));
+  window.addEventListener('mouseup',onDragEnd);
+  track.addEventListener('touchstart',e=>onDragStart(e.touches[0].clientX),{passive:true});
+  track.addEventListener('touchmove',e=>onDragMove(e.touches[0].clientX),{passive:true});
+  track.addEventListener('touchend',onDragEnd);
+
+  // Auto-advance
+  setInterval(()=>{
+    visCount=getVisCount();
+    go(idx+1>=total-visCount+1?0:idx+1);
+  },4500);
+  go(0);
+})();
+</script>
+</body>
+</html>
